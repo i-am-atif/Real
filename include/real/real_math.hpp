@@ -86,6 +86,30 @@ namespace boost{
 			result = result.up_to(max_error_exponent, upper);
 			return result;
 		}
+		
+
+		/**
+		 *  LOGARITHM10(BASE 10) FUNCTION USING TAYLOR EXPANSION
+		 * @brief: calculates log(base 10) of a exact_number using taylor expansion
+		 * @param: x: the exact number. whose logarithm (log(base 10)) is to be found
+		 * @param: max_error_exponent: Absolute Error in the result should be < 1*base^(-max_error_exponent)
+		 * @param:  upper: if true: error lies in [0, +epsilon]
+		 *                  else: error lies in [-epsilon, 0], here epsilon = 1*base^(-max_error_exponent)
+		 * @author: Atif Rasool
+		 **/
+		template<typename T>
+		exact_number<T> logarithm10(exact_number<T> x, size_t max_error_exponent, bool upper){
+			exact_number<T> result1("0");
+			exact_number<T> result2("0");
+			exact_number<T> result("0");
+			exact_number<T> y("10");
+			result1=logarithm( x, max_error_exponent, upper); //To find log(base e) x
+			result2=logarithm( y, max_error_exponent, upper); //To find log(base e) 10
+			result=result1.divide_vector(result2, max_error_exponent, upper); //To find log(base 10) x using the logic log(base 10) x = log(base e) x / log(base e) 10
+			result = result.up_to(max_error_exponent, upper);
+			return result;
+		}
+
 
 		/**
 		 *  SINE FUNCTION USING TAYLOR EXPANSION
